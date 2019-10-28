@@ -250,8 +250,7 @@
     Enable minor modes by buffer name and contents. It provides the =use-package= keyword
     =:minor= and =:magic-minor= where you can specify these rules.
     #+BEGIN_SRC emacs-lisp
-    (use-package auto-minor-mode
-      :demand t)
+    (use-package auto-minor-mode :disabled)
     #+END_SRC
 
 *** defrepeater
@@ -1298,11 +1297,11 @@
 *** rainbow-mode
     Display colors inline.
     #+BEGIN_SRC emacs-lisp
-    (use-package rainbow-mode
-      :minor
-      "-theme\\.el$"
-      :hook
-      help-mode)
+      (use-package rainbow-mode
+	;; :minor
+	;; "-theme\\.el$"
+	:hook
+	help-mode)
     #+END_SRC
 
 *** readable
@@ -2875,58 +2874,58 @@
 
 ** org
    #+BEGIN_SRC emacs-lisp
-   (use-package org-plus-contrib
-     :hook
-     (org-mode . auto-fill-mode)
-     (org-mode . hide-mode-line-mode)
-     (org-mode . +org-cursor-setup)
-     (org-babel-after-execute . org-redisplay-inline-images)
-     :minor
-     ("init\\.org$" . auto-tangle-mode)
-     :custom
-     (org-agenda-files '("~/org"))
-     (org-confirm-babel-evaluate nil)
-     (org-babel-load-languages
-      '((emacs-lisp . t)
-        (clojure    . t)
-        (js         . t)
-        (plantuml   . t)
-        (shell      . t)))
-     (org-edit-src-content-indentation 0)
-     (org-ellipsis "  ")
-     (org-fontify-whole-heading-line t)
-     (org-fontify-done-headline t)
-     (org-fontify-quote-and-verse-blocks t)
-     (org-hide-emphasis-markers t)
-     (org-image-actual-width 800)
-     (org-log-done 'time)
-     (org-plantuml-jar-path "~/.local/lib/plantuml.jar")
-     (org-pretty-entities t)
-     (org-startup-folded nil)
-     (org-startup-with-inline-images t)
-     (org-special-ctrl-a/e t)
-     (org-src-preserve-indentation nil)
-     (org-src-fontify-natively t)
-     (org-src-tab-acts-natively t)
-     (org-src-window-setup 'current-window)
-     (org-tag-alist
-      '(("@work"  . ?w)
-        ("@home"  . ?h)
-        ("laptop" . ?l)))
-     :defines org-babel-load-languages
-     :general
-     (:keymaps
-      'org-mode-map
-      "C-'" 'nil
-      "C-," 'nil)
-     :preface
-     (defun +org-cursor-setup ()
-       "Setup bar cursor for `org-mode'."
-       (setq cursor-type 'bar))
-     :config
-     (org-babel-do-load-languages
-      'org-babel-load-languages
-      org-babel-load-languages))
+     (use-package org-plus-contrib
+       :hook
+       (org-mode . auto-fill-mode)
+       (org-mode . hide-mode-line-mode)
+       (org-mode . +org-cursor-setup)
+       (org-babel-after-execute . org-redisplay-inline-images)
+       ;; :minor
+       ;; ("init\\.org$" . auto-tangle-mode)
+       :custom
+       (org-agenda-files '("~/org"))
+       (org-confirm-babel-evaluate nil)
+       (org-babel-load-languages
+	'((emacs-lisp . t)
+	  (clojure    . t)
+	  (js         . t)
+	  (plantuml   . t)
+	  (shell      . t)))
+       (org-edit-src-content-indentation 0)
+       (org-ellipsis "  ")
+       (org-fontify-whole-heading-line t)
+       (org-fontify-done-headline t)
+       (org-fontify-quote-and-verse-blocks t)
+       (org-hide-emphasis-markers t)
+       (org-image-actual-width 800)
+       (org-log-done 'time)
+       (org-plantuml-jar-path "~/.local/lib/plantuml.jar")
+       (org-pretty-entities t)
+       (org-startup-folded nil)
+       (org-startup-with-inline-images t)
+       (org-special-ctrl-a/e t)
+       (org-src-preserve-indentation nil)
+       (org-src-fontify-natively t)
+       (org-src-tab-acts-natively t)
+       (org-src-window-setup 'current-window)
+       (org-tag-alist
+	'(("@work"  . ?w)
+	  ("@home"  . ?h)
+	  ("laptop" . ?l)))
+       :defines org-babel-load-languages
+       :general
+       (:keymaps
+	'org-mode-map
+	"C-'" 'nil
+	"C-," 'nil)
+       :preface
+       (defun +org-cursor-setup ()
+	 "Setup bar cursor for `org-mode'."
+	 (setq cursor-type 'bar))
+       :config
+       (org-babel-do-load-languages
+	'org-babel-load-languages
+	org-babel-load-languages))
    #+END_SRC
 
 *** Packages
@@ -3054,25 +3053,25 @@
 
 ** ansible
    #+BEGIN_SRC emacs-lisp
-   (use-package ansible
-     :minor
-     "site\\.yml$"
-     "roles/.+\\.yml$"
-     :magic-minor
-     "^\\(---\n\\)?\\(#.*\n\\)* *-? \\(environment\\|h\\(?:\\(?:andler\\|ost\\)s\\)\\|i\\(?:mport_tasks\\|nclude\\(?:_tasks\\)?\\)\\|p\\(?:\\(?:ost\\|re\\)_tasks\\)\\|roles?\\|tasks\\|vars\\(?:_\\(?:files\\|prompt\\)\\)?\\):")
+     ;; (use-package ansible
+     ;;   :minor
+     ;;   "site\\.yml$"
+     ;;   "roles/.+\\.yml$"
+     ;;   :magic-minor
+     ;;   "^\\(---\n\\)?\\(#.*\n\\)* *-? \\(environment\\|h\\(?:\\(?:andler\\|ost\\)s\\)\\|i\\(?:mport_tasks\\|nclude\\(?:_tasks\\)?\\)\\|p\\(?:\\(?:ost\\|re\\)_tasks\\)\\|roles?\\|tasks\\|vars\\(?:_\\(?:files\\|prompt\\)\\)?\\):")
 
-   (use-package ansible-doc
-     :diminish ansible-doc-mode
-     :hook (ansible . ansible-doc-mode)
-     :preface
-     (defun ansible-doc-at-point ()
-       "Ansible doc with selected point"
-       (interactive)
-       (ansible-doc (thing-at-point 'symbol)))
-     :general
-     (:keymaps
-      'ansible::key-map
-      "M-g k" 'ansible-doc-at-point))
+     ;; (use-package ansible-doc
+     ;;   :diminish ansible-doc-mode
+     ;;   ;; :hook (ansible . ansible-doc-mode)
+     ;;   :preface
+     ;;   (defun ansible-doc-at-point ()
+     ;;     "Ansible doc with selected point"
+     ;;     (interactive)
+     ;;     (ansible-doc (thing-at-point 'symbol)))
+     ;;   :general
+     ;;   (:keymaps
+     ;;    'ansible::key-map
+     ;;    "M-g k" 'ansible-doc-at-point))
    #+END_SRC
 
 ** clojure
@@ -3516,16 +3515,16 @@
 ** jsx
    React JSX support.
    #+BEGIN_SRC emacs-lisp
-   (use-package rjsx-mode
-     :mode
-     "\\.jsx$"
-     :magic
-     ("\\(import.*from \'react\';?\\|\/\/ @flow\nimport.*from \'react\';?\\)" . rjsx-mode)
-     :general
-     (:keymaps
-      'rjsx-mode-map
-      :prefix +local-leader-key
-      "R" 'rjsx-rename-tag-at-point))
+     (use-package rjsx-mode
+       :mode
+       "\\.jsx$"
+       :magic
+       ("\\(import.*from \'react\';?\\|\/\/ @flow\nimport.*from \'react\';?\\)" . rjsx-mode)
+       :general
+       (:keymaps
+	'rjsx-mode-map
+	:prefix +local-leader-key
+	"R" 'rjsx-rename-tag-at-point))
    #+END_SRC
 
 ** kotlin
